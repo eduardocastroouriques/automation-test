@@ -1,0 +1,15 @@
+{
+  "name": "newman",
+  "version": "1.0.0",
+  "description": "Directory for automated tests",
+  "directories" : {
+     "test" : "tests"  
+  },
+  "scripts": {
+    "run-dev-tests": "newman run tests/AutomatedIntegradorRestaurante.json"
+  },
+  "author": "Auttar",
+  "dependencies": {
+    "newman": "^3.5.2"
+  }
+}
