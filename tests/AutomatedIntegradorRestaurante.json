@@ -1,103 +1,968 @@
 {
 	"info": {
-		"name": "Teste - Restaurante",
+		"name": "Teste - Integrador Restaurante",
 		"_postman_id": "0e3e740a-34aa-50d7-ebb5-e78c235fc2a0",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "1. GET checkout POS",
-			"event": [
+			"name": "checkout",
+			"description": "",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(20008);",
-							"});",
-							""
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"disabled": true
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n        \"document_number\": \"0000551234\",\n        \"company_group_code\": \"0001\",\n        \"company_chain_code\": \"0001\",\n        \"company_code\": \"00009\",\n        \"store_code\": \"0035\",\n        \"store_cnpj\": \"88820248000000\",\n        \"pos_code\": \"887\",\n        \"amount\": 100.00,\n        \"details\": {\n                \"fuel_pump_code\":\"01\",\n                \"amount\": 100.00,\n                \"quantity\": 20.10,\n                \"vendor\": \"Jaqueline\"\n        },\n        \"print_receipt\": true\n}"
-				},
-				"url": {
-					"raw": "https://postefnicho.auttar.com.br/POSMovelWs/v1/rest/checkout?company_code=00009&store_code=0036&checkout_status=pending&fuel_pump_code=01&integration_mode=2&service_id=1&niche=01&store_cnpj=00000000000936",
-					"protocol": "https",
-					"host": [
-						"postefnicho",
-						"auttar",
-						"com",
-						"br"
-					],
-					"path": [
-						"POSMovelWs",
-						"v1",
-						"rest",
-						"checkout"
-					],
-					"query": [
+					"name": "1. GET checkout POS - without company_code",
+					"event": [
 						{
-							"key": "company_code",
-							"value": "00009",
-							"equals": true
-						},
-						{
-							"key": "store_code",
-							"value": "0036",
-							"equals": true
-						},
-						{
-							"key": "checkout_status",
-							"value": "pending",
-							"equals": true
-						},
-						{
-							"key": "fuel_pump_code",
-							"value": "01",
-							"equals": true
-						},
-						{
-							"key": "integration_mode",
-							"value": "2",
-							"equals": true
-						},
-						{
-							"key": "service_id",
-							"value": "1",
-							"equals": true
-						},
-						{
-							"key": "niche",
-							"value": "01",
-							"equals": true
-						},
-						{
-							"key": "store_cnpj",
-							"value": "00000000000936",
-							"equals": true
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});",
+									"",
+									"pm.test(\"Body is correct\", function () {",
+									"    pm.response.to.have.body(",
+									"        ",
+									"{",
+									"    \"status\": 500,",
+									"    \"code\": 1,",
+									"    \"message\": \"CODIGO DA EMPRESA NAO INFORMADO\"",
+									"}",
+									"        ",
+									"        );",
+									"});"
+								]
+							}
 						}
-					]
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"document_number\": \"0000551234\",\n        \"company_group_code\": \"0001\",\n        \"company_chain_code\": \"0001\",\n        \"company_code\": \"00009\",\n        \"store_code\": \"0035\",\n        \"store_cnpj\": \"88820248000000\",\n        \"pos_code\": \"887\",\n        \"amount\": 100.00,\n        \"details\": {\n                \"fuel_pump_code\":\"01\",\n                \"amount\": 100.00,\n                \"quantity\": 20.10,\n                \"vendor\": \"Jaqueline\"\n        },\n        \"print_receipt\": true\n}"
+						},
+						"url": {
+							"raw": "http://{{base_url}}/IntegradorRestauranteWs/v1/rest/checkout?store_code=0036&store_cnpj=12345678912345&checkout_status=pending&identifier=01",
+							"protocol": "http",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"IntegradorRestauranteWs",
+								"v1",
+								"rest",
+								"checkout"
+							],
+							"query": [
+								{
+									"key": "company_code",
+									"value": "00009",
+									"equals": true,
+									"disabled": true
+								},
+								{
+									"key": "store_code",
+									"value": "0036",
+									"equals": true
+								},
+								{
+									"key": "store_cnpj",
+									"value": "12345678912345",
+									"equals": true
+								},
+								{
+									"key": "checkout_status",
+									"value": "pending",
+									"equals": true
+								},
+								{
+									"key": "identifier",
+									"value": "01",
+									"equals": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1. GET checkout POS - without store_code",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});",
+									"",
+									"pm.test(\"Body is correct\", function () {",
+									"    pm.response.to.have.body(",
+									"        ",
+									"{",
+									"    \"status\": 500,",
+									"    \"code\": 1,",
+									"    \"message\": \"CODIGO DA LOJA NAO INFORMADO\"",
+									"}",
+									"        ",
+									"        );",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"document_number\": \"0000551234\",\n        \"company_group_code\": \"0001\",\n        \"company_chain_code\": \"0001\",\n        \"company_code\": \"00009\",\n        \"store_code\": \"0035\",\n        \"store_cnpj\": \"88820248000000\",\n        \"pos_code\": \"887\",\n        \"amount\": 100.00,\n        \"details\": {\n                \"fuel_pump_code\":\"01\",\n                \"amount\": 100.00,\n                \"quantity\": 20.10,\n                \"vendor\": \"Jaqueline\"\n        },\n        \"print_receipt\": true\n}"
+						},
+						"url": {
+							"raw": "http://{{base_url}}/IntegradorRestauranteWs/v1/rest/checkout?company_code=00009&store_cnpj=12345678912345&checkout_status=pending&identifier=01",
+							"protocol": "http",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"IntegradorRestauranteWs",
+								"v1",
+								"rest",
+								"checkout"
+							],
+							"query": [
+								{
+									"key": "company_code",
+									"value": "00009",
+									"equals": true
+								},
+								{
+									"key": "store_code",
+									"value": "0036",
+									"equals": true,
+									"disabled": true
+								},
+								{
+									"key": "store_cnpj",
+									"value": "12345678912345",
+									"equals": true
+								},
+								{
+									"key": "checkout_status",
+									"value": "pending",
+									"equals": true
+								},
+								{
+									"key": "identifier",
+									"value": "01",
+									"equals": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1. GET checkout POS - without store_cnpj",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});",
+									"",
+									"pm.test(\"Body is correct\", function () {",
+									"    pm.response.to.have.body(",
+									"        ",
+									"{",
+									"    \"status\": 500,",
+									"    \"code\": 1,",
+									"    \"message\": \"CNPJ NAO INFORMADO\"",
+									"}",
+									"        ",
+									"        );",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"document_number\": \"0000551234\",\n        \"company_group_code\": \"0001\",\n        \"company_chain_code\": \"0001\",\n        \"company_code\": \"00009\",\n        \"store_code\": \"0035\",\n        \"store_cnpj\": \"88820248000000\",\n        \"pos_code\": \"887\",\n        \"amount\": 100.00,\n        \"details\": {\n                \"fuel_pump_code\":\"01\",\n                \"amount\": 100.00,\n                \"quantity\": 20.10,\n                \"vendor\": \"Jaqueline\"\n        },\n        \"print_receipt\": true\n}"
+						},
+						"url": {
+							"raw": "http://{{base_url}}/IntegradorRestauranteWs/v1/rest/checkout?company_code=00009&store_code=0036&checkout_status=pending&identifier=01",
+							"protocol": "http",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"IntegradorRestauranteWs",
+								"v1",
+								"rest",
+								"checkout"
+							],
+							"query": [
+								{
+									"key": "company_code",
+									"value": "00009",
+									"equals": true
+								},
+								{
+									"key": "store_code",
+									"value": "0036",
+									"equals": true
+								},
+								{
+									"key": "store_cnpj",
+									"value": "12345678912345",
+									"equals": true,
+									"disabled": true
+								},
+								{
+									"key": "checkout_status",
+									"value": "pending",
+									"equals": true
+								},
+								{
+									"key": "identifier",
+									"value": "01",
+									"equals": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1. GET checkout POS - without checkout_status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});",
+									"",
+									"pm.test(\"Body is correct\", function () {",
+									"    pm.response.to.have.body(",
+									"        ",
+									"{",
+									"    \"status\": 500,",
+									"    \"code\": 1,",
+									"    \"message\": \"CHECKOUT STATUS NAO INFORMADO\"",
+									"}",
+									"        ",
+									"        );",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"document_number\": \"0000551234\",\n        \"company_group_code\": \"0001\",\n        \"company_chain_code\": \"0001\",\n        \"company_code\": \"00009\",\n        \"store_code\": \"0035\",\n        \"store_cnpj\": \"88820248000000\",\n        \"pos_code\": \"887\",\n        \"amount\": 100.00,\n        \"details\": {\n                \"fuel_pump_code\":\"01\",\n                \"amount\": 100.00,\n                \"quantity\": 20.10,\n                \"vendor\": \"Jaqueline\"\n        },\n        \"print_receipt\": true\n}"
+						},
+						"url": {
+							"raw": "http://{{base_url}}/IntegradorRestauranteWs/v1/rest/checkout?company_code=00009&store_code=0036&store_cnpj=12345678912345&identifier=01",
+							"protocol": "http",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"IntegradorRestauranteWs",
+								"v1",
+								"rest",
+								"checkout"
+							],
+							"query": [
+								{
+									"key": "company_code",
+									"value": "00009",
+									"equals": true
+								},
+								{
+									"key": "store_code",
+									"value": "0036",
+									"equals": true
+								},
+								{
+									"key": "store_cnpj",
+									"value": "12345678912345",
+									"equals": true
+								},
+								{
+									"key": "checkout_status",
+									"value": "pending",
+									"equals": true,
+									"disabled": true
+								},
+								{
+									"key": "identifier",
+									"value": "01",
+									"equals": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1. GET checkout POS - without identifier",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});",
+									"",
+									"pm.test(\"Body is correct\", function () {",
+									"    pm.response.to.have.body(",
+									"        ",
+									"{",
+									"    \"status\": 500,",
+									"    \"code\": 1,",
+									"    \"message\": \"NUMERO DA MESA OU COMANDA NAO INFORMADO\"",
+									"}",
+									"        ",
+									"        );",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"document_number\": \"0000551234\",\n        \"company_group_code\": \"0001\",\n        \"company_chain_code\": \"0001\",\n        \"company_code\": \"00009\",\n        \"store_code\": \"0035\",\n        \"store_cnpj\": \"88820248000000\",\n        \"pos_code\": \"887\",\n        \"amount\": 100.00,\n        \"details\": {\n                \"fuel_pump_code\":\"01\",\n                \"amount\": 100.00,\n                \"quantity\": 20.10,\n                \"vendor\": \"Jaqueline\"\n        },\n        \"print_receipt\": true\n}"
+						},
+						"url": {
+							"raw": "http://{{base_url}}/IntegradorRestauranteWs/v1/rest/checkout?company_code=00009&store_code=0036&store_cnpj=12345678912345&checkout_status=pending",
+							"protocol": "http",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"IntegradorRestauranteWs",
+								"v1",
+								"rest",
+								"checkout"
+							],
+							"query": [
+								{
+									"key": "company_code",
+									"value": "00009",
+									"equals": true
+								},
+								{
+									"key": "store_code",
+									"value": "0036",
+									"equals": true
+								},
+								{
+									"key": "store_cnpj",
+									"value": "12345678912345",
+									"equals": true
+								},
+								{
+									"key": "checkout_status",
+									"value": "pending",
+									"equals": true
+								},
+								{
+									"key": "identifier",
+									"value": "01",
+									"equals": true,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "payment",
+			"description": "",
+			"item": [
+				{
+					"name": "start-payment",
+					"description": "",
+					"item": [
+						{
+							"name": "2. checkout-start-payment - without identifier",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Status code is 500\", function () {",
+											"    pm.response.to.have.status(500);",
+											"});",
+											"",
+											"pm.test(\"Body is correct\", function () {",
+											"    pm.response.to.have.body(",
+											"        ",
+											"        {",
+											"            \"status\": 500,",
+											"            \"code\": 1,",
+											"            \"message\": \"IDENTIFICADOR NAO INFORMADO\"",
+											"        }",
+											"        ",
+											"        );",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "client_secret",
+										"value": "sg/uwJ5cAkCvb8Ufox1K/A=="
+									},
+									{
+										"key": "client_id",
+										"value": "3ypo+NA25UCvy87njtsG3Q=="
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"pos_code\":\"013\",\n\t\"store_code\":\"0035\",\n\t\"company_code\":\"00009\"\n}"
+								},
+								"url": {
+									"raw": "http://{{base_url}}/IntegradorRestauranteWs/v1/rest/checkout/start-payment",
+									"protocol": "http",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"IntegradorRestauranteWs",
+										"v1",
+										"rest",
+										"checkout",
+										"start-payment"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2. checkout-start-payment - without company_code",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Status code is 500\", function () {",
+											"    pm.response.to.have.status(500);",
+											"});",
+											"",
+											"pm.test(\"Body is correct\", function () {",
+											"    pm.response.to.have.body(",
+											"        ",
+											"        {",
+											"            \"status\": 500,",
+											"            \"code\": 1,",
+											"            \"message\": \"CODIGO DA EMPRESA NAO INFORMADO\"",
+											"        }",
+											"        ",
+											"        );",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "client_secret",
+										"value": "sg/uwJ5cAkCvb8Ufox1K/A=="
+									},
+									{
+										"key": "client_id",
+										"value": "3ypo+NA25UCvy87njtsG3Q=="
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\" : 1,\n    \"pos_code\":\"013\",\n\t\"store_code\":\"0035\"\n}"
+								},
+								"url": {
+									"raw": "http://{{base_url}}/IntegradorRestauranteWs/v1/rest/checkout/start-payment",
+									"protocol": "http",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"IntegradorRestauranteWs",
+										"v1",
+										"rest",
+										"checkout",
+										"start-payment"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2. checkout-start-payment - without store_code",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Status code is 500\", function () {",
+											"    pm.response.to.have.status(500);",
+											"});",
+											"",
+											"pm.test(\"Body is correct\", function () {",
+											"    pm.response.to.have.body(",
+											"        ",
+											"{",
+											"    \"status\": 500,",
+											"    \"code\": 1,",
+											"    \"message\": \"CODIGO DA LOJA NAO INFORMADO\"",
+											"}",
+											"        ",
+											"        );",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "client_secret",
+										"value": "sg/uwJ5cAkCvb8Ufox1K/A=="
+									},
+									{
+										"key": "client_id",
+										"value": "3ypo+NA25UCvy87njtsG3Q=="
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\" : 1,\n    \"pos_code\":\"013\",\n\t\"company_code\":\"00009\"\n}"
+								},
+								"url": {
+									"raw": "http://{{base_url}}/IntegradorRestauranteWs/v1/rest/checkout/start-payment",
+									"protocol": "http",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"IntegradorRestauranteWs",
+										"v1",
+										"rest",
+										"checkout",
+										"start-payment"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2. checkout-start-payment - without pos_code",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Status code is 500\", function () {",
+											"    pm.response.to.have.status(500);",
+											"});",
+											"",
+											"pm.test(\"Body is correct\", function () {",
+											"    pm.response.to.have.body(",
+											"        ",
+											"{",
+											"    \"status\": 500,",
+											"    \"code\": 1,",
+											"    \"message\": \"CODIGO DO POS NAO INFORMADO\"",
+											"}",
+											"        ",
+											"        );",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "client_secret",
+										"value": "sg/uwJ5cAkCvb8Ufox1K/A=="
+									},
+									{
+										"key": "client_id",
+										"value": "3ypo+NA25UCvy87njtsG3Q=="
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\" : 1,\n\t\"store_code\":\"0035\",\n\t\"company_code\":\"00009\"\n}"
+								},
+								"url": {
+									"raw": "http://{{base_url}}/IntegradorRestauranteWs/v1/rest/checkout/start-payment",
+									"protocol": "http",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"IntegradorRestauranteWs",
+										"v1",
+										"rest",
+										"checkout",
+										"start-payment"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "cancel-payment",
+					"description": "",
+					"item": [
+						{
+							"name": "3.2 checkout-cancel-payment - without identifier",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Status code is 500\", function () {",
+											"    pm.response.to.have.status(500);",
+											"});",
+											"",
+											"pm.test(\"Body is correct\", function () {",
+											"    pm.response.to.have.body(",
+											"        ",
+											"        {",
+											"            \"status\": 500,",
+											"            \"code\": 1,",
+											"            \"message\": \"IDENTIFICADOR NAO INFORMADO\"",
+											"        }",
+											"        ",
+											"        );",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "client_secret",
+										"value": "sg/uwJ5cAkCvb8Ufox1K/A=="
+									},
+									{
+										"key": "client_id",
+										"value": "3ypo+NA25UCvy87njtsG3Q=="
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"pos_code\":\"013\",\n\t\"store_code\":\"0035\",\n\t\"company_code\":\"00009\"\n}"
+								},
+								"url": {
+									"raw": "http://{{base_url}}/IntegradorRestauranteWs/v1/rest/checkout/cancel-payment",
+									"protocol": "http",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"IntegradorRestauranteWs",
+										"v1",
+										"rest",
+										"checkout",
+										"cancel-payment"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "3.2 checkout-cancel-payment - without company_code",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Status code is 500\", function () {",
+											"    pm.response.to.have.status(500);",
+											"});",
+											"",
+											"pm.test(\"Body is correct\", function () {",
+											"    pm.response.to.have.body(",
+											"        ",
+											"        {",
+											"            \"status\": 500,",
+											"            \"code\": 1,",
+											"            \"message\": \"CODIGO DA EMPRESA NAO INFORMADO\"",
+											"        }",
+											"        ",
+											"        );",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "client_secret",
+										"value": "sg/uwJ5cAkCvb8Ufox1K/A=="
+									},
+									{
+										"key": "client_id",
+										"value": "3ypo+NA25UCvy87njtsG3Q=="
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\":\"1\",\n\t\"pos_code\":\"013\",\n\t\"store_code\":\"0035\"\n}"
+								},
+								"url": {
+									"raw": "http://{{base_url}}/IntegradorRestauranteWs/v1/rest/checkout/cancel-payment",
+									"protocol": "http",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"IntegradorRestauranteWs",
+										"v1",
+										"rest",
+										"checkout",
+										"cancel-payment"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "3.2 checkout-cancel-payment - without store_code",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Status code is 500\", function () {",
+											"    pm.response.to.have.status(500);",
+											"});",
+											"",
+											"pm.test(\"Body is correct\", function () {",
+											"    pm.response.to.have.body(",
+											"        ",
+											"{",
+											"    \"status\": 500,",
+											"    \"code\": 1,",
+											"    \"message\": \"CODIGO DA LOJA NAO INFORMADO\"",
+											"}",
+											"        ",
+											"        );",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "client_secret",
+										"value": "sg/uwJ5cAkCvb8Ufox1K/A=="
+									},
+									{
+										"key": "client_id",
+										"value": "3ypo+NA25UCvy87njtsG3Q=="
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\":\"1\",\n\t\"pos_code\":\"013\",\n\t\"company_code\":\"00009\"\n}"
+								},
+								"url": {
+									"raw": "http://{{base_url}}/IntegradorRestauranteWs/v1/rest/checkout/cancel-payment",
+									"protocol": "http",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"IntegradorRestauranteWs",
+										"v1",
+										"rest",
+										"checkout",
+										"cancel-payment"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "3.2 checkout-cancel-payment - without pos_code",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Status code is 500\", function () {",
+											"    pm.response.to.have.status(500);",
+											"});",
+											"",
+											"pm.test(\"Body is correct\", function () {",
+											"    pm.response.to.have.body(",
+											"        ",
+											"{",
+											"    \"status\": 500,",
+											"    \"code\": 1,",
+											"    \"message\": \"CODIGO DO POS NAO INFORMADO\"",
+											"}",
+											"        ",
+											"        );",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "client_secret",
+										"value": "sg/uwJ5cAkCvb8Ufox1K/A=="
+									},
+									{
+										"key": "client_id",
+										"value": "3ypo+NA25UCvy87njtsG3Q=="
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\":\"1\",\n\t\"store_code\":\"0035\",\n\t\"company_code\":\"00009\"\n}"
+								},
+								"url": {
+									"raw": "http://{{base_url}}/IntegradorRestauranteWs/v1/rest/checkout/cancel-payment",
+									"protocol": "http",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"IntegradorRestauranteWs",
+										"v1",
+										"rest",
+										"checkout",
+										"cancel-payment"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
 		}
 	]
 }
