@@ -63,62 +63,6 @@
 			"response": []
 		},
 		{
-			"name": "tracker - without service_name copy",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							"pm.test(\"Status code is 400\", function () {",
-							"    pm.response.to.have.status(400);",
-							"});",
-							"",
-							"pm.test(\"Body is correct\", function () {",
-							"    pm.response.to.have.body(",
-							"        ",
-							"{",
-							"    \"status\": 400,",
-							"    \"code\": 1,",
-							"    \"message\": \"SERVICE NAME NAO INFORMADO\"",
-							"}",
-							"        ",
-							"        );",
-							"});"
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"service_method\": \"POST\",\n  \"company_code\": \"00000\",\n  \"store_code\": \"0000\",\n  \"pos_code\": \"000\",\n  \"checkout_id\": \"0\",\n  \"input_payload\": \"INPUT PAYLOAD\",\n  \"output_payload\": \"INPUT PAYLOAD\",\n  \"request_pos\": \"2002-09-24 06:03:01\",\n  \"request_hub\": \"2002-09-24 06:03:01\",\n  \"response_hub\": \"2002-09-24 06:03:01\",\n  \"request_client_service\": \"2002-09-24 06:03:01\",\n  \"response_client_service\": \"2002-09-24 06:03:01\",\n  \"status\": \"SENT_TO_AUTOMATION\"\n }"
-				},
-				"url": {
-					"raw": "http://{{base_url}}/FuelStationTrackerWs/v1/rest/tracker",
-					"protocol": "http",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"FuelStationTrackerWs",
-						"v1",
-						"rest",
-						"tracker"
-					]
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
 			"name": "tracker - without method_name",
 			"event": [
 				{
@@ -158,11 +102,12 @@
 					"raw": " {\n  \"service_name\": \"START_PAYMENT\",\n  \"company_code\": \"00000\",\n  \"store_code\": \"0000\",\n  \"pos_code\": \"000\",\n  \"checkout_id\": \"0\",\n  \"input_payload\": \"INPUT PAYLOAD\",\n  \"output_payload\": \"INPUT PAYLOAD\",\n  \"request_pos\": \"2002-09-24 06:03:01\",\n  \"request_hub\": \"2002-09-24 06:03:01\",\n  \"response_hub\": \"2002-09-24 06:03:01\",\n  \"request_client_service\": \"2002-09-24 06:03:01\",\n  \"response_client_service\": \"2002-09-24 06:03:01\",\n  \"status\": \"SENT_TO_AUTOMATION\"\n }"
 				},
 				"url": {
-					"raw": "http://{{base_url}}/FuelStationTrackerWs/v1/rest/tracker",
+					"raw": "http://localhost:7001/FuelStationTrackerWs/v1/rest/tracker",
 					"protocol": "http",
 					"host": [
-						"{{base_url}}"
+						"localhost"
 					],
+					"port": "7001",
 					"path": [
 						"FuelStationTrackerWs",
 						"v1",
@@ -214,11 +159,12 @@
 					"raw": " {\n  \"service_name\": \"START_PAYMENT\",\n  \"service_method\": \"POST\",\n  \"store_code\": \"0000\",\n  \"pos_code\": \"000\",\n  \"checkout_id\": \"0\",\n  \"input_payload\": \"INPUT PAYLOAD\",\n  \"output_payload\": \"INPUT PAYLOAD\",\n  \"request_pos\": \"2002-09-24 06:03:01\",\n  \"request_hub\": \"2002-09-24 06:03:01\",\n  \"response_hub\": \"2002-09-24 06:03:01\",\n  \"request_client_service\": \"2002-09-24 06:03:01\",\n  \"response_client_service\": \"2002-09-24 06:03:01\",\n  \"status\": \"SENT_TO_AUTOMATION\"\n }"
 				},
 				"url": {
-					"raw": "http://{{base_url}}/FuelStationTrackerWs/v1/rest/tracker",
+					"raw": "http://localhost:7001/FuelStationTrackerWs/v1/rest/tracker",
 					"protocol": "http",
 					"host": [
-						"{{base_url}}"
+						"localhost"
 					],
+					"port": "7001",
 					"path": [
 						"FuelStationTrackerWs",
 						"v1",
@@ -270,11 +216,12 @@
 					"raw": " {\n  \"service_name\": \"START_PAYMENT\",\n  \"service_method\": \"POST\",\n  \"company_code\": \"00000\",\n  \"pos_code\": \"000\",\n  \"checkout_id\": \"0\",\n  \"input_payload\": \"INPUT PAYLOAD\",\n  \"output_payload\": \"INPUT PAYLOAD\",\n  \"request_pos\": \"2002-09-24 06:03:01\",\n  \"request_hub\": \"2002-09-24 06:03:01\",\n  \"response_hub\": \"2002-09-24 06:03:01\",\n  \"request_client_service\": \"2002-09-24 06:03:01\",\n  \"response_client_service\": \"2002-09-24 06:03:01\",\n  \"status\": \"SENT_TO_AUTOMATION\"\n }"
 				},
 				"url": {
-					"raw": "http://{{base_url}}/FuelStationTrackerWs/v1/rest/tracker",
+					"raw": "http://localhost:7001/FuelStationTrackerWs/v1/rest/tracker",
 					"protocol": "http",
 					"host": [
-						"{{base_url}}"
+						"localhost"
 					],
+					"port": "7001",
 					"path": [
 						"FuelStationTrackerWs",
 						"v1",
@@ -326,11 +273,12 @@
 					"raw": " {\n  \"service_name\": \"START_PAYMENT\",\n  \"service_method\": \"POST\",\n  \"company_code\": \"00000\",\n  \"store_code\": \"0000\",\n  \"pos_code\": \"000\",\n  \"checkout_id\": \"0\",\n  \"input_payload\": \"INPUT PAYLOAD\",\n  \"output_payload\": \"INPUT PAYLOAD\",\n  \"request_pos\": \"2002-09-24 06:03:01\",\n  \"request_hub\": \"2002-09-24 06:03:01\",\n  \"response_hub\": \"2002-09-24 06:03:01\",\n  \"request_client_service\": \"2002-09-24 06:03:01\",\n  \"response_client_service\": \"2002-09-24 06:03:01\"\n }"
 				},
 				"url": {
-					"raw": "http://{{base_url}}/FuelStationTrackerWs/v1/rest/tracker",
+					"raw": "http://localhost:7001/FuelStationTrackerWs/v1/rest/tracker",
 					"protocol": "http",
 					"host": [
-						"{{base_url}}"
+						"localhost"
 					],
+					"port": "7001",
 					"path": [
 						"FuelStationTrackerWs",
 						"v1",
